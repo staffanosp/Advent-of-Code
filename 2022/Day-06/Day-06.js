@@ -4,17 +4,17 @@ inputData = fs.readFileSync("input.txt", "utf8");
 inputData = inputData.trim().split("");
 
 const findMarker = (inputData, markerLength) => {
-  let index = 0;
+  const buffer = [];
+  for (let i = 0; i < inputData.length; i++) {
+    buffer.push(inputData[i]);
 
-  while (true) {
-    const currWindow = inputData.slice(index, index + markerLength);
-    const currWindowUnique = new Set(currWindow);
+    if (buffer.length < markerLength) continue;
 
-    if (currWindow.length === currWindowUnique.size) {
-      return index + markerLength;
+    if (new Set(buffer).size === markerLength) {
+      return i + 1;
     }
 
-    index++;
+    buffer.shift();
   }
 };
 
