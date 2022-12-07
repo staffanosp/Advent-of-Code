@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { Z_PARTIAL_FLUSH } = require("zlib");
 
 inputData = fs.readFileSync("input.txt", "utf8");
 inputData = inputData.split(/\r?\n/);
