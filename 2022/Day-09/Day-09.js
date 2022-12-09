@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { rootCertificates } = require("tls");
 
 inputData = fs.readFileSync("input.txt", "utf8");
 inputData = inputData
@@ -8,18 +9,15 @@ inputData = inputData
 
 const clamp = (v, min, max) => Math.max(Math.min(v, max), min);
 
-const solution01 = (inputData) => {
-  let head_x = 0;
-  let head_y = 0;
-  let tail_x = 0;
-  let tail_y = 0;
+const solution = (inputData, length) => {
+  let head_pos = [0, 0];
+  let tail = [...new Array(length)].map((v) => [0, 0]);
+
   const tailVisitedPositions = new Set();
 
   for (let [direction, steps] of inputData) {
     let head_dx = 0;
     let head_dy = 0;
-    let tail_dx = 0;
-    let tail_dy = 0;
 
     switch (direction) {
       case "L":
@@ -37,31 +35,43 @@ const solution01 = (inputData) => {
     }
 
     for (let step = 0; step < steps; step++) {
-      head_x += head_dx;
-      head_y += head_dy;
+      head_pos[0] += head_dx;
+      head_pos[1] += head_dy;
 
-      diff_x = head_x - tail_x;
-      diff_y = head_y - tail_y;
+      //loop the tail
+      for (let [i, knot] of tail.entries()) {
+        let target_pos;
+        if (i === 0) {
+          target_pos = head_pos;
+        } else {
+          target_pos = tail[i - 1];
+        }
 
-      max_diff = Math.max(Math.abs(diff_x), Math.abs(diff_y));
+        diff_x = target_pos[0] - knot[0];
+        diff_y = target_pos[1] - knot[1];
 
-      let tail_dx = 0;
-      let tail_dy = 0;
+        max_diff = Math.max(Math.abs(diff_x), Math.abs(diff_y));
 
-      if (max_diff > 1) {
-        tail_dx = clamp(diff_x, -1, 1);
-        tail_dy = clamp(diff_y, -1, 1);
+        let tail_dx = 0;
+        let tail_dy = 0;
+
+        if (max_diff > 1) {
+          tail_dx = clamp(diff_x, -1, 1);
+          tail_dy = clamp(diff_y, -1, 1);
+        }
+
+        knot[0] += tail_dx;
+        knot[1] += tail_dy;
+
+        if (i === length - 1) {
+          tailVisitedPositions.add([knot[0], knot[1]].join(","));
+        }
       }
-
-      tail_x += tail_dx;
-      tail_y += tail_dy;
-
-      tailVisitedPositions.add([tail_x, tail_y].join(","));
     }
   }
 
   return tailVisitedPositions.size;
 };
 
-console.log(`Solution 01: ${solution01(inputData)}`);
-// console.log(`Solution 02: ${solution(inputData, 2)}`);
+console.log(`Solution 01: ${solution(inputData, 1)}`);
+console.log(`Solution 02: ${solution(inputData, 9)}`);
