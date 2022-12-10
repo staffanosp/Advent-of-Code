@@ -7,8 +7,6 @@ inputData = inputData
   .map((line) => line.split(" "))
   .map((line) => [line[0], Number(line[1])]);
 
-const clamp = (v, min, max) => Math.max(Math.min(v, max), min);
-
 const solution = (inputData, length) => {
   let head_pos = [0, 0];
   let tail = [...new Array(length)].map((v) => [0, 0]);
@@ -56,8 +54,8 @@ const solution = (inputData, length) => {
         let tail_dy = 0;
 
         if (max_diff > 1) {
-          tail_dx = clamp(diff_x, -1, 1);
-          tail_dy = clamp(diff_y, -1, 1);
+          tail_dx = Math.sign(diff_x);
+          tail_dy = Math.sign(diff_y);
         }
 
         knot[0] += tail_dx;
