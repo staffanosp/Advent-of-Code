@@ -8,61 +8,49 @@ inputData = inputData
   .map((line) => [line[0], Number(line[1])]);
 
 const solution = (inputData, length) => {
-  let head_pos = [0, 0];
-  let tail = [...new Array(length)].map((v) => [0, 0]);
+  let rope = [...new Array(length + 1)].map((v) => [0, 0]);
 
   const tailVisitedPositions = new Set();
 
   for (let [direction, steps] of inputData) {
-    let head_dx = 0;
-    let head_dy = 0;
-
-    switch (direction) {
-      case "L":
-        head_dx = -1;
-        break;
-      case "R":
-        head_dx = 1;
-        break;
-      case "U":
-        head_dy = -1;
-        break;
-      case "D":
-        head_dy = 1;
-        break;
-    }
-
     for (let step = 0; step < steps; step++) {
-      head_pos[0] += head_dx;
-      head_pos[1] += head_dy;
+      //loop the rope
+      for (let i = 0; i < rope.length; i++) {
+        let dx = 0;
+        let dy = 0;
 
-      //loop the tail
-      for (let [i, knot] of tail.entries()) {
-        let target_pos;
         if (i === 0) {
-          target_pos = head_pos;
+          switch (direction) {
+            case "L":
+              dx = -1;
+              break;
+            case "R":
+              dx = 1;
+              break;
+            case "U":
+              dy = -1;
+              break;
+            case "D":
+              dy = 1;
+              break;
+          }
         } else {
-          target_pos = tail[i - 1];
+          diff_x = rope[i - 1][0] - rope[i][0];
+          diff_y = rope[i - 1][1] - rope[i][1];
+
+          max_diff = Math.max(Math.abs(diff_x), Math.abs(diff_y));
+
+          if (max_diff > 1) {
+            dx = Math.sign(diff_x);
+            dy = Math.sign(diff_y);
+          }
         }
 
-        diff_x = target_pos[0] - knot[0];
-        diff_y = target_pos[1] - knot[1];
+        rope[i][0] += dx;
+        rope[i][1] += dy;
 
-        max_diff = Math.max(Math.abs(diff_x), Math.abs(diff_y));
-
-        let tail_dx = 0;
-        let tail_dy = 0;
-
-        if (max_diff > 1) {
-          tail_dx = Math.sign(diff_x);
-          tail_dy = Math.sign(diff_y);
-        }
-
-        knot[0] += tail_dx;
-        knot[1] += tail_dy;
-
-        if (i === length - 1) {
-          tailVisitedPositions.add([knot[0], knot[1]].join(","));
+        if (i === length) {
+          tailVisitedPositions.add([rope[i][0], rope[i][1]].join(","));
         }
       }
     }
