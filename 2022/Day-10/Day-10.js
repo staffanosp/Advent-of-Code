@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { rootCertificates } = require("tls");
 
 inputData = fs.readFileSync("input.txt", "utf8");
 inputData = inputData
