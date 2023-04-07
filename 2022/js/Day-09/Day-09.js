@@ -60,3 +60,5 @@ const solution = (inputData, length) => {
 
 console.log(`Solution 01: ${solution(inputData, 1)}`);
 console.log(`Solution 02: ${solution(inputData, 9)}`);
+
+const arrowFunc = (a, b) => ({ a, b });
