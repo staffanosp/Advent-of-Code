@@ -61,6 +61,10 @@ def solution02(input_data):
                         max_index = index
                         last_digit = digit
 
+            # stop searching if digits are at the very beginning and end
+            if min_index == 0 and max_index == len(line) - 1:
+                break
+
         calibration_values.append(int(first_digit + last_digit))
 
     return sum(calibration_values)
