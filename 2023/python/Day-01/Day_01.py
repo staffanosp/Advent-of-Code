@@ -38,7 +38,6 @@ def solution02(input_data):
     calibration_values = []
 
     for line in input_data:
-        # first digit
         first_digit = None
         last_digit = None
         min_index = len(line)
