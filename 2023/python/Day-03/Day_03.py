@@ -28,26 +28,26 @@ def solution(input_data, part):
 
     # store numbers, symbols and gears
     for y, line in enumerate(input_data):
-        number_start_x = None
         curr_number = ""
+        curr_number_start_x = None
 
         for x, char in enumerate(line):
             if char.isdigit():
                 if not curr_number:
-                    number_start_x = x
+                    curr_number_start_x = x
 
                 curr_number += char
 
                 # store number at end of lines
                 if x == len(line) - 1:
-                    numbers.append((int(curr_number), number_start_x, x, y))
+                    numbers.append((int(curr_number), curr_number_start_x, x, y))
 
             else:
                 # store number
                 if curr_number:
-                    numbers.append((int(curr_number), number_start_x, x - 1, y))
-                    number_start_x = None
+                    numbers.append((int(curr_number), curr_number_start_x, x - 1, y))
                     curr_number = ""
+                    curr_number_start_x = None
 
                 # store symbols
                 if is_symbol(char):
