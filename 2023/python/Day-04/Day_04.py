@@ -1,6 +1,6 @@
 with open("input.txt", "r") as f:
     input_data = [
-        [[int(v) for v in numbers.split()] for numbers in numbers]
+        [set([int(v) for v in numbers.split()]) for numbers in numbers]
         for numbers in [
             line.strip().split(": ")[1].split(" | ") for line in f.readlines()
         ]
@@ -16,7 +16,7 @@ def clamp_below_one(n):
 def solution01(cards):
     return sum(
         [
-            clamp_below_one(2 ** (len(set(winning_numbers) & set(my_numbers)) - 1))
+            clamp_below_one(2 ** (len(winning_numbers & my_numbers) - 1))
             for winning_numbers, my_numbers in cards
         ]
     )
@@ -24,8 +24,7 @@ def solution01(cards):
 
 def solution02(cards):
     cards_matching_numbers_n = [
-        len(set(winning_numbers) & set(my_numbers))
-        for winning_numbers, my_numbers in cards
+        len(winning_numbers & my_numbers) for winning_numbers, my_numbers in cards
     ]
 
     cards_to_process = [i for i, _ in enumerate(cards)]
