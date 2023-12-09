@@ -61,8 +61,8 @@ def solution02(races):
             last_win_by_step_size_ms = ms
             break
 
-    # find the actual ms values
-    # 1. first win
+    # 2. Find the actual ms values
+    # first win
     for ms in range(first_win_by_step_size_ms - step_size, race_time):
         speed = ms
         remaining_time = race_time - ms
@@ -72,7 +72,7 @@ def solution02(races):
             first_win_ms = ms
             break
 
-    # 2. last win
+    # last win
     for ms in range(last_win_by_step_size_ms - step_size, race_time):
         speed = ms
         remaining_time = race_time - ms
