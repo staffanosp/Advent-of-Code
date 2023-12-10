@@ -35,18 +35,8 @@ def solution(hands, part):
     hands = hands.copy()
 
     labels_to_strength = {
-        1: {
-            label: i
-            for i, label in enumerate(
-                ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
-            )
-        },
-        2: {
-            label: i
-            for i, label in enumerate(
-                ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
-            )
-        },
+        1: {label: i for i, label in enumerate("23456789TJQKA")},
+        2: {label: i for i, label in enumerate("J23456789TQKA")},
     }
 
     for hand in hands:
