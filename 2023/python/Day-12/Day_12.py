@@ -1,4 +1,4 @@
-from itertools import combinations, product, permutations
+from itertools import product
 
 with open("input.txt", "r") as f:
     input_data = [
