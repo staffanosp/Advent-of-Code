@@ -30,9 +30,14 @@ def solution(galaxies, expansion_multiplier):
         for col in empty_cols:
             if x > col:
                 x_expanded += expansion_multiplier - 1
+            else:
+                break
+
         for row in empty_rows:
             if y > row:
                 y_expanded += expansion_multiplier - 1
+            else:
+                break
 
         galaxies_expanded.append((x_expanded, y_expanded))
 
