@@ -126,8 +126,7 @@ def solution02(patterns):
 
     # Sum it all up
     sums = {"rows": 0, "cols": 0}
-    for i in range(len(patterns)):
-        split_i, rows_or_cols = smudge_fixed_splits.get(i, (original_splits[i]))
+    for split_i, rows_or_cols in smudge_fixed_splits.values():
         sums[rows_or_cols] += split_i
 
     return sums["cols"] + sums["rows"] * 100
