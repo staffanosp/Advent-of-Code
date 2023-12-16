@@ -57,7 +57,6 @@ def solution02(input_map):
 
     directions = ["north", "west", "south", "east"]
 
-    cycle = 0
     repeated = False
     while not repeated:
         for direction in directions:
@@ -96,6 +95,9 @@ def solution02(input_map):
                 if direction in ["west", "east"]:
                     input_map = transpose(input_map)
 
+        map_as_string = map_to_string(input_map)
+        repeated = map_as_string in cycles_history
+
         load = sum(
             [
                 len([c for c in row if c == "O"]) * (len(input_map) - i)
@@ -103,14 +105,8 @@ def solution02(input_map):
             ]
         )
 
-        map_as_string = map_to_string(input_map)
-
-        repeated = map_as_string in cycles_history
-
-        cycles_history.append(map_as_string)
         map_to_load[map_as_string] = load
-
-        cycle += 1
+        cycles_history.append(map_as_string)
 
     # find the repeating pattern
     repeated_pattern = cycles_history[-1]
