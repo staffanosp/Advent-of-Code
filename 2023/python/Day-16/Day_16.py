@@ -13,14 +13,9 @@ def solution(input_map, part):
     if part == 1:
         start_beams = [(-1, 0, 1, 0)]
     else:
-        start_beams = []
-        for y in range(h):
-            for x, dx in [(-1, 1), (w, -1)]:
-                start_beams.append((x, y, dx, 0))
-
-        for x in range(w):
-            for y, dy in [(-1, 1), (h, -1)]:
-                start_beams.append((x, y, 0, dy))
+        start_beams = [
+            (x, y, dx, 0) for y in range(h) for x, dx in [(-1, 1), (w, -1)]
+        ] + [(x, y, 0, dy) for x in range(w) for y, dy in [(-1, 1), (h, -1)]]
 
     # Solution
     energized_tiles_sums = []
