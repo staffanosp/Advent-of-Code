@@ -4,3 +4,5 @@ dist
 .parcel-cache
 assets
 .vscode
+
+input.txt
