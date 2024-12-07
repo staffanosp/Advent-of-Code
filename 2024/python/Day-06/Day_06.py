@@ -48,41 +48,6 @@ def solution01(grid):
     return len(visited)
 
 
-def solution01(grid):
-    w = len(grid[0])
-    h = len(grid)
-
-    direction = 0
-
-    position = None
-    obstacles = set()
-
-    for x, y in product(range(w), range(h)):
-        match grid[y][x]:
-            case "#":
-                obstacles.add((x, y))
-            case "^":
-                position = (x, y)
-
-    visited = set()
-
-    while position[0] in range(w) and position[1] in range(h):
-        visited.add(position)
-
-        curr_x, curr_y = position
-        dx, dy = directions[direction]
-        next_x = curr_x + dx
-        next_y = curr_y + dy
-
-        if (next_x, next_y) in obstacles:
-            direction = (direction + 1) % len(directions)
-            continue
-
-        position = (next_x, next_y)
-
-    return len(visited)
-
-
 def solution02(grid):
     w = len(grid[0])
     h = len(grid)
