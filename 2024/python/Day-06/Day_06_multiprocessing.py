@@ -45,7 +45,7 @@ def solution01(grid):
 
         position = (next_x, next_y)
 
-    return len(visited)
+    return visited
 
 
 def check_for_loop(args):
@@ -78,7 +78,7 @@ def check_for_loop(args):
     return False
 
 
-def solution02(grid):
+def solution02(grid, original_path):
     w = len(grid[0])
     h = len(grid)
 
@@ -95,7 +95,9 @@ def solution02(grid):
     potential_obstacles = [
         (x, y)
         for x, y in product(range(w), range(h))
-        if not (x, y) in obstacles and not (x, y) == start_position
+        if (x, y) in original_path
+        and not (x, y) in obstacles
+        and not (x, y) == start_position
     ]
 
     args = [
@@ -110,6 +112,7 @@ def solution02(grid):
 
 if __name__ == "__main__":
     print("—")
-    print(f"Solution 01: {solution01(grid)}")
-    print(f"Solution 02: {solution02(grid)}")
+    part1_visited = solution01(grid)
+    print(f"Solution 01: {len(part1_visited)}")
+    print(f"Solution 02: {solution02(grid,part1_visited)}")
     print("—")
